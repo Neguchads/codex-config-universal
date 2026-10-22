@@ -1,0 +1,17 @@
+[
+  ".gitignore",
+  "AGENTS.md",
+  "README.md",
+  "ROADMAP.md",
+  "SECURITY.md",
+  "docs/ANALYSIS.md",
+  "docs/DECISIONS.md",
+  "docs/WORKFLOW.md",
+  "public-manifest.json",
+  "scripts/config.py",
+  "scripts/test.ps1",
+  "scripts/test.py",
+  "templates/AGENTS.md",
+  "templates/config.toml",
+  "tests/test_config.py"
+]
