@@ -4,7 +4,8 @@
 - Não publique configurações globais brutas, auth, variáveis de ambiente, sessões, memórias, bancos ou logs.
 - Padrões de caminhos locais, e-mails, rede privada, identificadores de sessão e chaves privadas bloqueiam o gate.
 - Gitleaks é obrigatório para arquivos e histórico Git existente. A saída dos achados não é reproduzida.
-- E-mails de autor e committer em todas as referências locais devem usar domínio público noreply do GitHub.
+- E-mails de autor e committer em todas as referências locais devem usar domínio público noreply do GitHub
+  ou o endereço noreply do bot de commits. Histórico ilegível bloqueia a operação.
 - Crie o repositório remoto vazio; README automático pode usar a identidade pessoal configurada na conta.
 - Revisão humana deve procurar nomes, contexto pessoal e dados não reconhecíveis por padrões.
 - Arquivos extras bloqueiam o gate mesmo quando ignorados pelo Git; apenas `.git`, caches Python e `dist` são

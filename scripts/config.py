@@ -125,12 +125,20 @@ def run_gitleaks(root, executable="gitleaks"):
             raise RuntimeError("Gitleaks bloqueou a operação; conteúdo dos achados omitido.")
 
 
+def public_git_email(email):
+    return email.endswith("@users.noreply.github.com") or email == "".join(("noreply", "@github.com"))
+
+
 def audit_git_identity(root):
     history = subprocess.run(["git", "-C", str(root), "log", "--all", "--format=%ae%n%ce"], capture_output=True, text=True)
     if history.returncode:
-        return
+        if not (root / ".git").exists():
+            repository = subprocess.run(["git", "-C", str(root), "rev-parse", "--show-toplevel"], capture_output=True)
+            if repository.returncode:
+                return
+        raise RuntimeError("Histórico Git não pôde ser validado; operação bloqueada.")
     emails = history.stdout.splitlines()
-    if any(not email.endswith(("@users.noreply.github.com", "@github.com")) for email in emails):
+    if any(not public_git_email(email) for email in emails):
         raise ValueError("Metadados Git contêm e-mail fora do padrão público noreply.")
 
 

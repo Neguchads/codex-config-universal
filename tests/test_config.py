@@ -86,6 +86,17 @@ class ConfigTests(unittest.TestCase):
                 config.audit_git_identity(root)
             self.assertNotIn(private_email, str(caught.exception))
 
+    def test_git_identity_does_not_allow_personal_corporate_address(self):
+        self.assertFalse(config.public_git_email("person" + "@github.com"))
+        self.assertTrue(config.public_git_email("noreply" + "@github.com"))
+
+    def test_unreadable_git_history_blocks_release(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / ".git").mkdir()
+            with self.assertRaises(RuntimeError):
+                config.audit_git_identity(root)
+
     def test_real_gitleaks_rejects_synthetic_secret_without_echoing_it(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
