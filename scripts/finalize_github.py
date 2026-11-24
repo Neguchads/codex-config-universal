@@ -13,8 +13,8 @@ CHECKS = {
     "ScriptForge": ["verificar", "quality / node-quality", AUDIT, "Analyze (javascript-typescript)"],
     "favorite-manager": ["test-and-build", "quality / node-quality", AUDIT, "chromium", "Analyze (javascript-typescript)"],
     "codex-config-universal": ["validate", AUDIT, "quality / docs-quality"],
-    "ccod-xbox-recomp": ["python-syntax", "quality / python-quality", AUDIT, "source-only-tests", "Analyze (c-cpp)", "Analyze (python)"],
-    "csotn-saturn-recomp": ["Python 3.11", "Python 3.13", "Publication and secrets", "Native runtime", "quality / python-quality", AUDIT, "Analyze (python)", "Analyze (c-cpp)"],
+    "ccod-xbox-recomp": ["python-syntax", "quality / python-quality", AUDIT, "source-only-tests", "Windows source-only C++ tests", "Analyze (c-cpp)", "Analyze (python)"],
+    "csotn-saturn-recomp": ["Python 3.11", "Python 3.13", "Publication and secrets", "Native runtime", "Windows source-only native runtime", "quality / python-quality", AUDIT, "Analyze (python)", "Analyze (c-cpp)"],
     "cdos-nintendods-recomp": ["Python & Manifest (windows-latest)", "Clean-Room Guard, Shell & Patch Lint", "Python & Manifest (ubuntu-latest)", "quality / python-quality", AUDIT, "Analyze (c-cpp)", "Analyze (python)"],
     "spec-to-proof": ["validate", AUDIT, "quality / docs-quality"],
 }
@@ -97,7 +97,11 @@ def main():
     if login.lower() != OWNER.lower():
         raise SystemExit("Authenticate locally as Neguchads before proceeding")
     errors = []
-    for name in args.repo or list(CHECKS):
+    targets = args.repo or list(CHECKS)
+    # A release-only invocation must not re-apply or preflight existing rulesets.
+    if args.enable_release_planning and not args.apply_rulesets:
+        targets = []
+    for name in targets:
         try:
             root, payload = prepare(name, args.approvals)
             print(name, json.dumps(payload, ensure_ascii=False, indent=2))
