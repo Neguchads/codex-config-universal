@@ -96,7 +96,7 @@ jobs:
         run: |
           set -euo pipefail
           test -f .github/advanced/benchmark.ts
-          if [[ "$PKG" == pnpm ]]; then pnpm exec vite-node .github/advanced/benchmark.ts
+          if [[ "$PKG" == pnpm ]]; then pnpm exec tsx .github/advanced/benchmark.ts
           else npm exec -- vite-node .github/advanced/benchmark.ts; fi
       - name: Retain machine-readable benchmark
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
