@@ -16,3 +16,5 @@ jobs:
       - name: Check unresolved merge markers
         shell: bash
         run: '! grep -n "^<<<<<<< " README.md'
+      - name: Verify local administrative policy without network
+        run: python3 -m unittest discover -s tests -v
