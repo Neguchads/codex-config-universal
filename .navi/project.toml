@@ -1,0 +1,14 @@
+schema_version = 1
+[project]
+name = "codex-config-universal"
+visibility = "public"
+maturity = "experimental"
+profile = "python-tooling"
+[verification]
+require_real_tests = true
+timeout_seconds = 900
+[knowledge]
+public_export = false
+[agents]
+approval_for_production = true
+parallel_workers = 2

@@ -1,0 +1,15 @@
+name: NAVI pilot
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: navi-pilot-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    uses: Neguchads/navi-core/.github/workflows/reusable-ci.yml@f7f9d9497ab4d94ef01fee5ef06c9aa0ebd80160
+    with:
+      core_sha: f7f9d9497ab4d94ef01fee5ef06c9aa0ebd80160
